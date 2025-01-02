@@ -7,7 +7,7 @@ pub mod utils;
 
 use clap::Parser;
 
-/// Simple program to greet a person
+/// Simple chromosome scatter plotter
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
