@@ -1,3 +1,5 @@
+[![Rust](https://github.com/bwbioinfo/rs-chromplotter/actions/workflows/rust.yml/badge.svg)](https://github.com/bwbioinfo/rs-chromplotter/actions/workflows/rust.yml)
+
 # Simple rust plotting program for plotting modification data along a chromosome
 
 ## Example output
