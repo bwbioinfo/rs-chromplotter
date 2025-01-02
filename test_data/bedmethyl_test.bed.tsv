@@ -1,0 +1,11 @@
+chrom	chromStart	chromEnd	name	score	strand	thickStart	thickEnd	color	valid_coverage	percent_modified	count_modified	count_canonical	count_other_mod	count_delete	count_fail	count_diff	count_nocall
+chr1	1000	1500	gene1	960	+	1000	1500	0	100	10.0	10	80	5	2	1	1	1
+chr1	2000	2500	gene2	850	-	2000	2500	0	200	15.0	30	150	10	5	2	2	1
+chr2	3000	3500	gene3	900	+	3000	3500	0	150	12.0	18	120	8	3	1	1	2
+chr2	4000	4500	gene4	870	-	4000	4500	0	180	14.0	25	130	15	4	3	2	1
+chr3	5000	5500	gene5	920	+	5000	5500	0	170	11.0	20	140	6	2	2	1	1
+chr3	6000	6500	gene6	880	-	6000	6500	0	190	13.0	28	160	12	5	3	2	2
+chr4	7000	7500	gene7	930	+	7000	7500	0	160	10.5	15	130	10	3	1	1	1
+chr4	8000	8500	gene8	890	-	8000	8500	0	210	16.0	35	170	20	6	4	3	2
+chr5	9000	9500	gene9	940	+	9000	9500	0	140	9.0	12	110	5	2	1	1	1
+chr5	10000	10500	gene10	860	-	10000	10500	0	220	17.0	40	180	25	7	5	4	3
