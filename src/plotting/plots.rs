@@ -13,8 +13,8 @@ use std::{error::Error, vec};
 pub fn plot_chromosome(data: DataFrame, output_path: &str) -> Result<(), Box<dyn Error>> {
 
     // Extract the columns we need
-    let start_position: Vec<Option<i64>> =  data.column("start position").unwrap().i64().unwrap().into_iter().collect();
-    let percent_modified = data.column("percent modified").unwrap().f64().unwrap().to_vec();
+    let start_position: Vec<Option<i64>> =  data.column("chromStart").unwrap().i64().unwrap().into_iter().collect();
+    let percent_modified = data.column("percent_modified").unwrap().f64().unwrap().to_vec();
     // Transpose the data into a format that can be used by the chart
     let datapoints = dz!(start_position, percent_modified);
 
@@ -50,4 +50,18 @@ pub fn plot_chromosome(data: DataFrame, output_path: &str) -> Result<(), Box<dyn
     println!("Saved to: {}", output_path);
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::read_bedmethyl;
+    use crate::prepare_data;
+    use crate::plot_chromosome;
+
+    #[test]
+    fn test_add_fail() {
+        let data = read_bedmethyl("test_data/bedmethyl_test.bed.tsv").unwrap();
+        let filtered = prepare_data(data, "chr1").unwrap();
+        plot_chromosome(filtered, "test_data/chr1.svg").unwrap();
+    }
 }

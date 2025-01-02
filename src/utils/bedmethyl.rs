@@ -22,6 +22,6 @@ mod tests {
 
     #[test]
     fn test_add_fail() {
-        read_bedmethyl("test_data/aln.bed").unwrap();
+        read_bedmethyl("test_data/bedmethyl_test.bed.tsv").unwrap();
     }
 }

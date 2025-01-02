@@ -40,14 +40,3 @@ fn main( ) {
     }
     plot_chromosome(filtered, &args.output).unwrap();
 }
-
-// cargo run -- -h
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_main() {
-        main();
-    }
-}
