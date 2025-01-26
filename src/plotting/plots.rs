@@ -2,7 +2,7 @@ use charming::{
     component::{Title, Axis},
     series::Scatter,
     Chart,
-    ImageRenderer,
+    ImageRenderer, ImageFormat,
     dz,
     theme::Theme
 };
@@ -36,16 +36,23 @@ pub fn plot_chromosome(data: DataFrame, output_path: &str) -> Result<(), Box<dyn
     .y_axis(Axis::new())
     .series(
         Scatter::new()
-        .symbol_size(10)
+        .symbol_size(5)
         .data(datapoints)
     );
 
     // Render the chart
     let mut renderer = 
         ImageRenderer::new(1500, 200)
-        .theme(Theme::Dark);
-    
-    _ = renderer.save(&chart, output_path);
+        .theme(Theme::Default);
+    // Render the chart as SVG string.
+    renderer.render(&chart).unwrap();
+    // Render the chart as PNG bytes.
+    renderer.render_format(ImageFormat::Png, &chart).unwrap();
+    // Save the chart as SVG file.
+    // renderer.save(&chart, output_path).unwrap();
+    // Save the chart as PNG file.
+    _ = renderer.save_format(ImageFormat::Png, &chart, output_path);
+
 
     println!("Saved to: {}", output_path);
 
@@ -62,6 +69,6 @@ mod tests {
     fn test_add_fail() {
         let data = read_bedmethyl("test_data/bedmethyl_test.bed.tsv").unwrap();
         let filtered = prepare_data(data, "chr1").unwrap();
-        plot_chromosome(filtered, "test_data/chr1.svg").unwrap();
+        plot_chromosome(filtered, "test_data/chr1.png").unwrap();
     }
 }
