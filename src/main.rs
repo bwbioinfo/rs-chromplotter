@@ -72,7 +72,7 @@ mod tests {
     fn test_plot() {
         let data = read_bedmethyl("test_data/bedmethyl_test.bed.tsv").unwrap();
         let filtered = prepare_data(data, "chr1").unwrap();
-        plotters_chromosome(filtered, "test_data/charming_test.png").unwrap();
+        plotters_chromosome(filtered, "test_data/test.png").unwrap();
     }
 }
 

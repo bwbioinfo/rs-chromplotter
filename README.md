@@ -3,7 +3,7 @@
 # Simple rust plotting program for plotting modification data along a chromosome
 
 ## Example output
-![Example output](test_data/chr1_light.png)
+![Example output](test_data/test.png)
 
 ## Installation
 
