@@ -1,4 +1,6 @@
-// use crate::plotting::plotly::plotly_chromosome;
+use clap::{Parser, Subcommand};
+use std::time::Instant;
+
 use crate::plotting::plotters::plotters_chromosome;
 use crate::utils::bedmethyl::read_bedmethyl;
 use crate::utils::prepare_data::prepare_data;
@@ -6,51 +8,63 @@ use crate::utils::prepare_data::prepare_data;
 pub mod plotting;
 pub mod utils;
 
-use clap::Parser;
-use std::time::Instant;
-
-/// Simple chromosome scatter plotter
-#[derive(Parser, Debug)]
-#[command(version, about, long_about = None)]
-struct Args {
-    /// The BedMethyl file to read
-    #[arg(short, long)]
-    bedfile: String,
-
-    /// The chromosome to plot
-    #[arg(short, long)]
-    chrom: String,
-
-    // The output file
-    #[arg(short, long)]
-    output: String,
+/// Main CLI parser
+#[derive(Parser)]
+#[command(name = "myapp", version, about = "A CLI tool for various genomic visusalisations.")]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
+/// Define possible subcommands
+#[derive(Subcommand)]
+enum Commands {
+    /// Generate a chromosome scatter plot
+    Chromplot {
+        /// The BedMethyl file to read
+        #[arg(short, long)]
+        bedfile: String,
 
-fn main( ) {
+        /// The chromosome to plot
+        #[arg(short, long)]
+        chrom: String,
 
-    let args = Args::parse();
-    println!("{:?}", args);
+        /// The output file
+        #[arg(short, long)]
+        output: String,
+    },
+}
 
-    let start = Instant::now();
-    let df = read_bedmethyl(&args.bedfile).unwrap();
-    let duration = start.elapsed();
-    println!("Read bedmethyl in: {:?}", duration);
+fn main() {
+    let cli = Cli::parse();
 
-    let start = Instant::now();
-    let filtered = prepare_data(df, &args.chrom).unwrap();
-    // If filtered is empty, return a warning and stop
-    if filtered.height() == 0 {
-        println!("No data found for chromosome {}", &args.chrom);
-        return;
+    match cli.command {
+        Commands::Chromplot { bedfile, chrom, output } => {
+            println!(
+                "Running chromplot with file: {}, chromosome: {}, output: {}",
+                bedfile, chrom, output
+            );
+
+            let start = Instant::now();
+            let df = read_bedmethyl(&bedfile).unwrap();
+            let duration = start.elapsed();
+            println!("Read bedmethyl in: {:?}", duration);
+
+            let start = Instant::now();
+            let filtered = prepare_data(df, &chrom).unwrap();
+            if filtered.height() == 0 {
+                println!("No data found for chromosome {}", chrom);
+                return;
+            }
+            let duration = start.elapsed();
+            println!("Prepared data in: {:?}", duration);
+
+            let start = Instant::now();
+            plotters_chromosome(filtered, &output).unwrap();
+            let duration = start.elapsed();
+            println!("Plotted in: {:?}", duration);
+        }
     }
-    let duration = start.elapsed();
-    println!("Prepared data in: {:?}", duration);
-
-    let start = Instant::now();
-    plotters_chromosome(filtered, &args.output).unwrap();
-    let duration = start.elapsed();
-    println!("Plotted in: {:?}", duration);
 }
 
 // Add simple tests to the main.rs file
