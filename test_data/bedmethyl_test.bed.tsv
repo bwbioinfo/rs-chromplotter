@@ -1,4 +1,4 @@
-chrom	chromStart	chromEnd	name	score	strand	thickStart	thickEnd	color	valid_coverage	percent_modified	count_modified	count_canonical	count_other_mod	count_delete	count_fail	count_diff	count_nocall
+#chrom	chromStart	chromEnd	name	score	strand	thickStart	thickEnd	color	valid_coverage	percent_modified	count_modified	count_canonical	count_other_mod	count_delete	count_fail	count_diff	count_nocall
 chr1	1000	1500	gene1	960	+	1000	1500	0	100	10.0	10	80	5	2	1	1	1
 chr1	2000	2500	gene2	850	-	2000	2500	0	200	15.0	30	150	10	5	2	2	1
 chr2	3000	3500	gene3	900	+	3000	3500	0	150	12.0	18	120	8	3	1	1	2

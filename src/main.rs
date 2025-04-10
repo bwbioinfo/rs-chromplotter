@@ -1,16 +1,21 @@
 use clap::{Parser, Subcommand};
 use std::time::Instant;
 
-use crate::plotting::plotters::plotters_chromosome;
-use crate::utils::bedmethyl::read_bedmethyl;
-use crate::utils::prepare_data::prepare_data;
+// Import local mods
 
-pub mod plotting;
-pub mod utils;
+mod plotting;
+use plotting::plotters::plotters::plotters_chromosome;
+mod utils;
+use utils::bedmethyl::bedmethyl::read_bedmethyl;
+use utils::preprocess::preprocess::prepare_data;
 
 /// Main CLI parser
 #[derive(Parser)]
-#[command(name = "myapp", version, about = "A CLI tool for various genomic visusalisations.")]
+#[command(
+    name = "Chromplotter",
+    version,
+    about = "A CLI tool for various genomic visusalisations."
+)]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -39,7 +44,11 @@ fn main() {
     let cli = Cli::parse();
 
     match cli.command {
-        Commands::Chromplot { bedfile, chrom, output } => {
+        Commands::Chromplot {
+            bedfile,
+            chrom,
+            output,
+        } => {
             println!(
                 "Running chromplot with file: {}, chromosome: {}, output: {}",
                 bedfile, chrom, output
@@ -71,10 +80,9 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-
-    use crate::plotting::plotters::plotters_chromosome;
-    use crate::utils::bedmethyl::read_bedmethyl;
-    use crate::utils::prepare_data::prepare_data;
+    use super::plotting::plotters::plotters::plotters_chromosome;
+    use super::utils::bedmethyl::bedmethyl::read_bedmethyl;
+    use super::utils::preprocess::preprocess::prepare_data;
 
     #[test]
     fn test_add_fail() {
@@ -89,4 +97,3 @@ mod tests {
         plotters_chromosome(filtered, "test_data/test.png").unwrap();
     }
 }
-
